@@ -3,33 +3,11 @@ import {Text, View, StyleSheet, ScrollView, ActivityIndicator} from 'react-nativ
 import ImageModal from 'react-native-image-modal';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import { Dimensions } from 'react-native';
-import axios from 'axios';
-
-const baseUrl = 'https://api.unsplash.com/photos/?client_id=ab3411e4ac868c2646c0ed488dfd919ef612b04c264f3374c97fff98ed253dc9';
+import { useSelector } from 'react-redux';
 
 export const HomeScreen = ({ navigation }) => {
-    
-  const [images, setImages] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
 
-  React.useEffect(() => {
-    setLoading(true)
-    axios.get(baseUrl)
-      .then(response => {
-        setImages(response.data)
-        setLoading(false)
-      })
-      .catch(error => console.log(error));
-    
-  },[])
-
-  if(loading){
-    return (
-      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-        <ActivityIndicator size="large" />
-      </View>
-    )
-  }
+  const images = useSelector((store) => store.images);
 
   return (
     <SafeAreaView>
